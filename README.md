@@ -24,7 +24,7 @@ This framework currenlty provides functionality to discover services on the loca
 ```ruby
 use_frameworks!
 
-pod 'GCXMulticastDNSKit',  :git => 'https://github.com/grandcentrix/GCXMulticastDNSKit.git', :tag => '1.0.1'
+pod 'GCXMulticastDNSKit'
 
 ```
 
