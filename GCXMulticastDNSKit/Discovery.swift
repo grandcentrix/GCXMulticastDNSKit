@@ -141,9 +141,9 @@ private class DiscoveryItem {
     
     
     /// the completion closures
-    fileprivate var discoverHandler: DiscoveryDiscoverHandler?
-    fileprivate var failHandler: DiscoveryFailHandler?
-    fileprivate var serviceRemovedHandler: DiscoveryServiceRemovedHandler?
+    public var discoverHandler: DiscoveryDiscoverHandler?
+    public var failHandler: DiscoveryFailHandler?
+    public var serviceRemovedHandler: DiscoveryServiceRemovedHandler?
     
     /// the designated initializer. creates a new discovery for the specified configurations
     ///
