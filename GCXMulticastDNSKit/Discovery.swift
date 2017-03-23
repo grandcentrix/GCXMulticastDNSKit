@@ -59,7 +59,7 @@ private class DiscoveryItem {
 
 
 /// a structure to enapsulate the result of a service discovery, this is returned
-@objc(GCXDiscoveryService) public class DiscoveryService: NSObject {
+@objc(GCXDiscoveryService) open class DiscoveryService: NSObject {
     
     /// the configuration used to search
     public let configuration: DiscoveryConfiguration
@@ -67,7 +67,7 @@ private class DiscoveryItem {
     /// the found service
     public let netService: NetService
     
-    init(configuration: DiscoveryConfiguration, netService: NetService) {
+    public init(configuration: DiscoveryConfiguration, netService: NetService) {
         self.configuration = configuration
         self.netService  = netService
         super.init()
@@ -120,7 +120,7 @@ private class DiscoveryItem {
 
 /// the class to use to discover service on the network. Initialize a new instance with an array of
 /// configurations and start the search.
-@objc(GCXDiscovery) public class Discovery: NSObject {
+@objc(GCXDiscovery) open class Discovery: NSObject {
 
     
     /// the default search domain, empty string means .local. 
@@ -141,9 +141,9 @@ private class DiscoveryItem {
     
     
     /// the completion closures
-    fileprivate var discoverHandler: DiscoveryDiscoverHandler?
-    fileprivate var failHandler: DiscoveryFailHandler?
-    fileprivate var serviceRemovedHandler: DiscoveryServiceRemovedHandler?
+    public var discoverHandler: DiscoveryDiscoverHandler?
+    public var failHandler: DiscoveryFailHandler?
+    public var serviceRemovedHandler: DiscoveryServiceRemovedHandler?
     
     /// the designated initializer. creates a new discovery for the specified configurations
     ///
@@ -207,7 +207,11 @@ extension Discovery {
     fileprivate func stopSearchingAndResolving() {
         let _ = items?.map {
             $0.netServiceBrowser.stop()
-            let _ = $0.netServices.map { $0.stop() }
+            $0.netServiceBrowser.delegate = nil
+            let _ = $0.netServices.map {
+                $0.stop()
+                $0.delegate = nil
+            }
         }
         
         items = nil
