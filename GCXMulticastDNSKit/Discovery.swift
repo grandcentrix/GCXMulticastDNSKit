@@ -207,7 +207,11 @@ extension Discovery {
     fileprivate func stopSearchingAndResolving() {
         let _ = items?.map {
             $0.netServiceBrowser.stop()
-            let _ = $0.netServices.map { $0.stop() }
+            $0.netServiceBrowser.delegate = nil
+            let _ = $0.netServices.map {
+                $0.stop()
+                $0.delegate = nil
+            }
         }
         
         items = nil
