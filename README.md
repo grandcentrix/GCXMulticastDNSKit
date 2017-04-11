@@ -1,5 +1,6 @@
 # GCXMulticastDNSKit
- [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Release](https://img.shields.io/github/release/grandcentrix/GCXMulticastDNSKit.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/GCXMulticastDNSKit.svg)](https://cocoapods.org/) 	
+ [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Release](https://img.shields.io/github/release/grandcentrix/GCXMulticastDNSKit.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/GCXMulticastDNSKit.svg)](https://cocoapods.org/) [![codecov](https://codecov.io/gh/grandcentrix/GCXMulticastDNSKit/branch/master/graph/badge.svg)](https://codecov.io/gh/grandcentrix/GCXMulticastDNSKit)
+
 
 
 Multicast DNS framework for iOS
