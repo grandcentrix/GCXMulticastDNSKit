@@ -114,6 +114,65 @@ class GCXDiscoveryTests: XCTestCase {
     }
 
     
+    func testNetServiceDelegateSuccessWithWrongNetService() {
+        service = NetService(domain: "", type: "_http._tcp", name: "GCXDNSKitTest", port: 10000 )
+        let discoveryConfiguration = DiscoveryConfiguration(serviceType: "_http._tcp", serviceNamePrefix: "GCXDNSKitTest")
+        guard let discovery = Discovery(with: [ discoveryConfiguration ], delegate: self) else {
+            XCTAssertTrue(false)
+            return
+        }
+        
+        XCTAssertNoThrow(discovery.netServiceDidResolveAddress(service!)
+, "should return early from delegate call when no item is found")
+        
+    }
+    
+    func testNetServiceDelegateDidNotResolveWithWrongNetService() {
+        service = NetService(domain: "", type: "_http._tcp", name: "GCXDNSKitTest", port: 10000 )
+        let discoveryConfiguration = DiscoveryConfiguration(serviceType: "_http._tcp", serviceNamePrefix: "GCXDNSKitTest")
+        guard let discovery = Discovery(with: [ discoveryConfiguration ], delegate: self) else {
+            XCTAssertTrue(false)
+            return
+        }
+        
+        XCTAssertNoThrow(discovery.netService(service!, didNotResolve: [ "SomeString": 3 ])
+            , "should return early from delegate call when no item is found")
+        
+    }
+    
+    func testNetServiceBrowserDelegateDidFindWithWrongNetServiceBrowser() {
+        let netserviceBrowser = NetServiceBrowser()
+        service = NetService(domain: "", type: "_http._tcp", name: "GCXDNSKitTest", port: 10000 )
+        
+        let discoveryConfiguration = DiscoveryConfiguration(serviceType: "_http._tcp", serviceNamePrefix: "GCXDNSKitTest")
+        guard let discovery = Discovery(with: [ discoveryConfiguration ], delegate: self) else {
+            XCTAssertTrue(false)
+            return
+        }
+        
+        
+        XCTAssertNoThrow(discovery.netServiceBrowser(netserviceBrowser, didFind: service!, moreComing: false)
+            , "should return early from delegate call when no item is found")
+        
+    }
+
+    func testNetServiceBrowserDelegateDidRemoveWithWrongNetServiceBrowser() {
+        let netserviceBrowser = NetServiceBrowser()
+        service = NetService(domain: "", type: "_http._tcp", name: "GCXDNSKitTest", port: 10000 )
+
+        let discoveryConfiguration = DiscoveryConfiguration(serviceType: "_http._tcp", serviceNamePrefix: "GCXDNSKitTest")
+        guard let discovery = Discovery(with: [ discoveryConfiguration ], delegate: self) else {
+            XCTAssertTrue(false)
+            return
+        }
+        
+       
+        XCTAssertNoThrow(discovery.netServiceBrowser(netserviceBrowser, didRemove: service!, moreComing: false)
+            , "should return early from delegate call when no item is found")
+        
+    }
+
+    
   
 
 }
