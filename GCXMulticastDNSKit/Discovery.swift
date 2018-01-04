@@ -67,7 +67,7 @@ public class DiscoveryService: NSObject {
     /// the found service
     public let netService: NetService
     
-    init(configuration: DiscoveryConfiguration, netService: NetService) {
+    public init(configuration: DiscoveryConfiguration, netService: NetService) {
         self.configuration = configuration
         self.netService  = netService
         super.init()
