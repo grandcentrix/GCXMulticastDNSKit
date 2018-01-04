@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		68B792891E69620900A482A8 /* GCXDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B792881E69620900A482A8 /* GCXDiscoveryTests.swift */; };
-		68B7928D1E697BC300A482A8 /* GCXDiscoveryObjectiveCIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B7928C1E697BC300A482A8 /* GCXDiscoveryObjectiveCIntegration.m */; };
 		68FF3C211E24DDDF00A482A8 /* GCXMulticastDNSKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68FF3C171E24DDDF00A482A8 /* GCXMulticastDNSKit.framework */; };
-		68FF3C281E24DDDF00A482A8 /* GCXMulticastDNSKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 68FF3C1A1E24DDDF00A482A8 /* GCXMulticastDNSKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		68FF3C4C1E24E6A700A482A8 /* Discovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FF3C4B1E24E6A700A482A8 /* Discovery.swift */; };
 		68FF3C4E1E24E6D400A482A8 /* DiscoveryConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FF3C4D1E24E6D400A482A8 /* DiscoveryConfiguration.swift */; };
 /* End PBXBuildFile section */
@@ -27,9 +25,7 @@
 
 /* Begin PBXFileReference section */
 		68B792881E69620900A482A8 /* GCXDiscoveryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCXDiscoveryTests.swift; sourceTree = "<group>"; };
-		68B7928C1E697BC300A482A8 /* GCXDiscoveryObjectiveCIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCXDiscoveryObjectiveCIntegration.m; sourceTree = "<group>"; };
 		68FF3C171E24DDDF00A482A8 /* GCXMulticastDNSKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCXMulticastDNSKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		68FF3C1A1E24DDDF00A482A8 /* GCXMulticastDNSKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCXMulticastDNSKit.h; sourceTree = "<group>"; };
 		68FF3C1B1E24DDDF00A482A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68FF3C201E24DDDF00A482A8 /* GCXMulticastDNSKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GCXMulticastDNSKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		68FF3C271E24DDDF00A482A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -65,14 +61,6 @@
 			name = "Unit Tests";
 			sourceTree = "<group>";
 		};
-		68B7928A1E697B6400A482A8 /* Framework integration */ = {
-			isa = PBXGroup;
-			children = (
-				68B7928C1E697BC300A482A8 /* GCXDiscoveryObjectiveCIntegration.m */,
-			);
-			name = "Framework integration";
-			sourceTree = "<group>";
-		};
 		68FF3C0D1E24DDDF00A482A8 = {
 			isa = PBXGroup;
 			children = (
@@ -95,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				68FF3C7B1E2621C100A482A8 /* README.md */,
-				68FF3C1A1E24DDDF00A482A8 /* GCXMulticastDNSKit.h */,
 				68FF3C1B1E24DDDF00A482A8 /* Info.plist */,
 				68FF3C4B1E24E6A700A482A8 /* Discovery.swift */,
 				68FF3C4D1E24E6D400A482A8 /* DiscoveryConfiguration.swift */,
@@ -106,7 +93,6 @@
 		68FF3C241E24DDDF00A482A8 /* GCXMulticastDNSKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				68B7928A1E697B6400A482A8 /* Framework integration */,
 				68B792871E6961D000A482A8 /* Unit Tests */,
 				68FF3C271E24DDDF00A482A8 /* Info.plist */,
 			);
@@ -120,7 +106,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68FF3C281E24DDDF00A482A8 /* GCXMulticastDNSKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,17 +155,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "grandcentrix GmbH";
 				TargetAttributes = {
 					68FF3C161E24DDDF00A482A8 = {
 						CreatedOnToolsVersion = 8.2.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					68FF3C1F1E24DDDF00A482A8 = {
 						CreatedOnToolsVersion = 8.2.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -234,7 +219,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68B7928D1E697BC300A482A8 /* GCXDiscoveryObjectiveCIntegration.m in Sources */,
 				68B792891E69620900A482A8 /* GCXDiscoveryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,7 +350,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -386,7 +371,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.grandcentrix.GCXMulticastDNSKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -400,7 +386,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.grandcentrix.GCXMulticastDNSKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -413,7 +400,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.grandcentrix.GCXMulticastDNSKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

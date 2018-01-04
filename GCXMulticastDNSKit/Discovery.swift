@@ -59,7 +59,7 @@ private class DiscoveryItem {
 
 
 /// a structure to enapsulate the result of a service discovery, this is returned
-@objc(GCXDiscoveryService) open class DiscoveryService: NSObject {
+public class DiscoveryService: NSObject {
     
     /// the configuration used to search
     public let configuration: DiscoveryConfiguration
@@ -67,7 +67,7 @@ private class DiscoveryItem {
     /// the found service
     public let netService: NetService
     
-    public init(configuration: DiscoveryConfiguration, netService: NetService) {
+    init(configuration: DiscoveryConfiguration, netService: NetService) {
         self.configuration = configuration
         self.netService  = netService
         super.init()
@@ -81,7 +81,7 @@ private class DiscoveryItem {
 /// - browsingFailure: failed to browse
 /// - resolvingTimeout: timeout while resolving
 /// - resolvingFailure: a general failure while resolving
-@objc(GCXDiscoveryError) public enum DiscoveryError: Int, Error {
+public enum DiscoveryError: Int, Error {
     case unknown
     case browsingFailure
     case resolvingTimeout
@@ -90,7 +90,7 @@ private class DiscoveryItem {
 
 
 /// the protocol used for the delegate
-@objc(GCXDiscoveryDelegate) public protocol DiscoveryDelegate {
+public protocol DiscoveryDelegate {
     
     /// called when a service has been discovered and resolved. Can be called multiple times for a
     /// search when more than one matching service is found. Is only called while in search mode.
@@ -120,7 +120,7 @@ private class DiscoveryItem {
 
 /// the class to use to discover service on the network. Initialize a new instance with an array of
 /// configurations and start the search.
-@objc(GCXDiscovery) open class Discovery: NSObject {
+public class Discovery: NSObject {
 
     
     /// the default search domain, empty string means .local. 
@@ -141,9 +141,9 @@ private class DiscoveryItem {
     
     
     /// the completion closures
-    public var discoverHandler: DiscoveryDiscoverHandler?
-    public var failHandler: DiscoveryFailHandler?
-    public var serviceRemovedHandler: DiscoveryServiceRemovedHandler?
+    fileprivate var discoverHandler: DiscoveryDiscoverHandler?
+    fileprivate var failHandler: DiscoveryFailHandler?
+    fileprivate var serviceRemovedHandler: DiscoveryServiceRemovedHandler?
     
     /// the designated initializer. creates a new discovery for the specified configurations
     ///
@@ -207,11 +207,7 @@ extension Discovery {
     fileprivate func stopSearchingAndResolving() {
         let _ = items?.map {
             $0.netServiceBrowser.stop()
-            $0.netServiceBrowser.delegate = nil
-            let _ = $0.netServices.map {
-                $0.stop()
-                $0.delegate = nil
-            }
+            let _ = $0.netServices.map { $0.stop() }
         }
         
         items = nil

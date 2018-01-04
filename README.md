@@ -1,6 +1,5 @@
 # GCXMulticastDNSKit
- [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Release](https://img.shields.io/github/release/grandcentrix/GCXMulticastDNSKit.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/GCXMulticastDNSKit.svg)](https://cocoapods.org/) [![codecov](https://codecov.io/gh/grandcentrix/GCXMulticastDNSKit/branch/master/graph/badge.svg)](https://codecov.io/gh/grandcentrix/GCXMulticastDNSKit)
-
+ [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Release](https://img.shields.io/github/release/grandcentrix/GCXMulticastDNSKit.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/GCXMulticastDNSKit.svg)](https://cocoapods.org/) 	
 
 
 Multicast DNS framework for iOS
@@ -25,14 +24,14 @@ This framework currenlty provides functionality to discover services on the loca
 ```ruby
 use_frameworks!
 
-pod 'GCXMulticastDNSKit'
+pod 'GCXMulticastDNSKit', :git => 'https://github.com/grandcentrix/GCXMulticastDNSKit.git', :tag => '1.2.0'
 
 ```
 
 ### Carthage
 
 ```ruby
-git "https://github.com/grandcentrix/GCXMulticastDNSKit.git" ~> 1.0.1
+git "https://github.com/grandcentrix/GCXMulticastDNSKit.git" ~> 1.2.0
 
 ```
 
@@ -41,8 +40,8 @@ git "https://github.com/grandcentrix/GCXMulticastDNSKit.git" ~> 1.0.1
 To use this framework we assume that you know the service type of the services (for example `_ptp._tcp` is valid service type for PTP/IP services, another example would be `_http._tcp`). Because there can be more than one service that provides functionality you can also specify an optional prefix for service name that must match. For the example below we are looking for PTP compatible cameras from Vendor A. Those announce themselves with a PTP service type and a services name of `Vendor A (#serialnr)`. We want to find all VendorA cameras on the local network so we use `_ptp._tcp` as service type and `Vendor A` as service name prefix:
 
 ```swift
-let configurations = [ DiscoveryConfiguration(serviceType: "_ptp._tcp",
-                                           serviceNamePrefix: "Vendor A") ]
+let configurations = [DiscoveryConfiguration(serviceType: "_ptp._tcp",
+                                           serviceNamePrefix: "Vendor A")]
 
 discovery = Discovery(withConfigurations:configurations, delegate: self)
 discovery?.startDiscovery()
