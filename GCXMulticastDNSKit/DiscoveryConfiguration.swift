@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc(GCXDiscoveryConfiguration) open class DiscoveryConfiguration: NSObject {
+public class DiscoveryConfiguration: NSObject {
     public let serviceType: String
     public var serviceNamePrefix: String?
     
