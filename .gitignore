@@ -1,0 +1,90 @@
+############################
+# OS X temporary files     # 
+############################
+.Trashes
+.DS_Store
+*.swp
+*.lock
+
+############################
+# Xcode temporary files    #
+############################
+*~.nib
+
+############################
+# Xcode build files        #
+############################
+DerivedData/
+DerivedData
+build/
+
+############################
+# Xcode private settings   #
+############################
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# withelist the defaults 
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+############################
+# Xcode misc files         #
+############################
+xcuserdata/
+xcuserdata
+*.xcuserstate
+*.xcscmblueprint
+
+############################
+# Xcode source control     #
+############################
+*.xccheckout
+
+############################
+# Xcode deprecated classes #
+############################
+*.moved-aside
+
+############################
+# Xcode workspace          #
+############################
+*.xcworkspace
+
+############################
+# Obj-C/Swift specific     #
+############################
+*.hmap
+*.ipa
+
+############################
+# JetBrains IDEs files     #
+############################
+.idea/
+
+############################
+# Ruby                     #
+############################
+# Gemfile.lock
+
+############################
+# Cocoapods                #
+############################
+Pods/
+
+############################
+# Carthage                 #
+############################
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts
+Carthage
+
+############################
+# Fastlane                 #
+############################
+fastlane/report.xml
+fastlane/screenshots
