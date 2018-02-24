@@ -90,7 +90,7 @@ public enum DiscoveryError: Int, Error {
 
 
 /// the protocol used for the delegate
-public protocol DiscoveryDelegate {
+public protocol DiscoveryDelegate: class {
     
     /// called when a service has been discovered and resolved. Can be called multiple times for a
     /// search when more than one matching service is found. Is only called while in search mode.
@@ -137,7 +137,7 @@ public class Discovery: NSObject {
     fileprivate var items: [DiscoveryItem]?
     
     /// the delegate
-    public var delegate: DiscoveryDelegate?
+    public weak var delegate: DiscoveryDelegate?
     
     
     /// the completion closures
