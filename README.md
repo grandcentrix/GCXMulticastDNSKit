@@ -24,7 +24,7 @@ This framework currenlty provides functionality to discover services on the loca
 ```ruby
 use_frameworks!
 
-pod 'GCXMulticastDNSKit', :git => 'https://github.com/grandcentrix/GCXMulticastDNSKit.git', :tag => '1.2.0'
+pod 'GCXMulticastDNSKit', :git => 'https://github.com/grandcentrix/GCXMulticastDNSKit.git', :tag => 'v1.2.0'
 
 ```
 
@@ -43,7 +43,7 @@ To use this framework we assume that you know the service type of the services (
 let configurations = [DiscoveryConfiguration(serviceType: "_ptp._tcp",
                                            serviceNamePrefix: "Vendor A")]
 
-discovery = Discovery(withConfigurations:configurations, delegate: self)
+discovery = Discovery(with: configurations, delegate: self)
 discovery?.startDiscovery()
 
 ```
