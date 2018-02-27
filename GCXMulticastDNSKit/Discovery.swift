@@ -271,9 +271,7 @@ extension Discovery {
 extension Discovery: NetServiceBrowserDelegate {
     
     public func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
-        guard let item = item(serviceBrowser: browser) else {
-            return
-        }
+        guard let item = item(serviceBrowser: browser) else { return }
         
         if item.isValidForService(netService: service) {
             item.netServices.insert(service)
@@ -282,18 +280,14 @@ extension Discovery: NetServiceBrowserDelegate {
         }
     }
     
-    public func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
-        guard let item = item(serviceBrowser: browser) else {
-            return
-        }
+    public func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String: NSNumber]) {
+        guard let item = item(serviceBrowser: browser) else { return }
 
         notifyDiscoveryDidFail(configuration: item.configuration, error: .browsingFailure)
     }
     
     public func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-        guard let item = item(service: service) else {
-            return
-        }
+        guard let item = item(service: service) else { return }
 
         item.netServices.remove(service)
         
@@ -305,17 +299,13 @@ extension Discovery: NetServiceBrowserDelegate {
 extension Discovery: NetServiceDelegate {
     
     public func netServiceDidResolveAddress(_ sender: NetService) {
-        guard let item = item(service: sender) else {
-            return
-        }
+        guard let item = item(service: sender) else { return }
         
         notifyDiscoveryDidDiscover(service: DiscoveryService(configuration: item.configuration, netService: sender))
     }
     
-    public func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
-        guard let item = item(service: sender) else {
-            return
-        }
+    public func netService(_ sender: NetService, didNotResolve errorDict: [String: NSNumber]) {
+        guard let item = item(service: sender) else { return }
         
         notifyDiscoveryDidFail(configuration: item.configuration, error: .resolvingFailure)
     }
