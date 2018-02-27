@@ -243,22 +243,25 @@ extension Discovery {
 extension Discovery {
     fileprivate func notifyDiscoveryDidDiscover(service: DiscoveryService) {
         DispatchQueue.main.async { [weak self] () -> Void in
-            self?.delegate?.discoveryDidDiscover(service: service)
-            self?.discoverHandler?(service)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.discoveryDidDiscover(service: service)
+            strongSelf.discoverHandler?(service)
         }
     }
     
     fileprivate func notifyDiscoveryDidFail(configuration: DiscoveryConfiguration, error: DiscoveryError) {
         DispatchQueue.main.async { [weak self] () -> Void in
-            self?.delegate?.discoveryDidFail(configuration: configuration, error: error)
-            self?.failHandler?(configuration, error)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.discoveryDidFail(configuration: configuration, error: error)
+            strongSelf.failHandler?(configuration, error)
         }
     }
     
     fileprivate func notifyDiscoveryServiceDidDisappear(service: DiscoveryService) {
         DispatchQueue.main.async { [weak self] () -> Void in
-            self?.delegate?.discoveryDidDisappear(service: service)
-            self?.serviceRemovedHandler?(service)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.discoveryDidDisappear(service: service)
+            strongSelf.serviceRemovedHandler?(service)
         }
     }
 }
