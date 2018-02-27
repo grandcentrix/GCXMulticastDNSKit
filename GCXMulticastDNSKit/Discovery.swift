@@ -180,7 +180,7 @@ public class Discovery: NSObject {
 
     // workaround for http://www.openradar.me/28943305, see https://github.com/grandcentrix/GCXMulticastDNSKit/issues/11
     deinit {
-        let _ = items?.map {
+        _ = items?.map {
             $0.netServiceBrowser.delegate = nil
         }
     }
@@ -212,9 +212,9 @@ extension Discovery {
     
     /// stops all search and resolve operations
     fileprivate func stopSearchingAndResolving() {
-        let _ = items?.map {
+        _ = items?.map {
             $0.netServiceBrowser.stop()
-            let _ = $0.netServices.map { $0.stop() }
+            _ = $0.netServices.map { $0.stop() }
         }
         
         items = nil
@@ -222,24 +222,12 @@ extension Discovery {
     
     /// lookup for an item from a net service
     fileprivate func item(service: NetService) -> DiscoveryItem? {
-        guard let item = items?.filter({ (discoveryItem) -> Bool in
-            return discoveryItem.netServices.contains(service)
-        }).first else {
-            return nil
-        }
-        
-        return item
+        return items?.first { $0.netServices.contains(service) }
     }
     
     /// lookup for an item from a net service browser
     fileprivate func item(serviceBrowser: NetServiceBrowser) -> DiscoveryItem? {
-        guard let item = items?.filter({ (discoveryItem) -> Bool in
-            return discoveryItem.netServiceBrowser == serviceBrowser
-        }).first else {
-            return nil
-        }
-        
-        return item
+        return items?.first { $0.netServiceBrowser == serviceBrowser }
     }
 }
 
