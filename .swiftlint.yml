@@ -1,0 +1,35 @@
+included:
+  - GCXMulticastDNSKit
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - GCXMulticastDNSKitTests
+disabled_rules: # rule identifiers to exclude from running
+  - line_length
+  - trailing_whitespace
+  - todo
+opt_in_rules:
+  - array_init
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - empty_count
+  - fatal_error_message
+  - first_where
+  - force_unwrapping
+  - number_separator
+  - prohibited_super_call
+  - overridden_super_call
+  - redundant_nil_coalescing
+  - sorted_imports
+  - sorted_first_last
+  - trailing_closure
+vertical_whitespace:
+  max_empty_lines: 2
+identifier_name:
+  max_length: 150
+  excluded:
+    - id
+    - on
+    - up
+    - ok
+type_name:
+  max_length: 150

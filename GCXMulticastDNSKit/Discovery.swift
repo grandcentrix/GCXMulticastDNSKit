@@ -153,7 +153,7 @@ public class Discovery: NSObject {
     public init?(with configurations: [DiscoveryConfiguration],
                  delegate: DiscoveryDelegate,
                  serviceResolveTimeout: TimeInterval = 10) {
-        guard configurations.count > 0 else {
+        if configurations.isEmpty {
             return nil
         }
         
@@ -162,12 +162,20 @@ public class Discovery: NSObject {
         self.serviceResolveTimeout = serviceResolveTimeout
     }
     
+    /// optional initializer. creates a new discovery utilizing callbacks
+    ///
+    /// - Parameters:
+    ///   - configurations: an array of GCXDiscoveryConfiguration instance. Must contain at least one config or the init will fail
+    ///   - discoverHandler: callback for discovery success
+    ///   - failHandler: callback for discovery fail
+    ///   - serviceRemovedHandler: callback for service removal
+    ///   - serviceResolveTimeout: callback for occurred timeouts
     public init?(with configurations: [DiscoveryConfiguration],
                  discoverHandler: DiscoveryDiscoverHandler?,
                  failHandler: DiscoveryFailHandler?,
                  serviceRemovedHandler: DiscoveryServiceRemovedHandler?,
                  serviceResolveTimeout: TimeInterval = 10) {
-        guard configurations.count > 0 else {
+        if configurations.isEmpty {
             return nil
         }
         
@@ -180,7 +188,7 @@ public class Discovery: NSObject {
 
     // workaround for http://www.openradar.me/28943305, see https://github.com/grandcentrix/GCXMulticastDNSKit/issues/11
     deinit {
-        let _ = items?.map {
+        _ = items?.map {
             $0.netServiceBrowser.delegate = nil
         }
     }
@@ -212,9 +220,9 @@ extension Discovery {
     
     /// stops all search and resolve operations
     fileprivate func stopSearchingAndResolving() {
-        let _ = items?.map {
+        _ = items?.map {
             $0.netServiceBrowser.stop()
-            let _ = $0.netServices.map { $0.stop() }
+            _ = $0.netServices.map { $0.stop() }
         }
         
         items = nil
@@ -222,24 +230,12 @@ extension Discovery {
     
     /// lookup for an item from a net service
     fileprivate func item(service: NetService) -> DiscoveryItem? {
-        guard let item = items?.filter({ (discoveryItem) -> Bool in
-            return discoveryItem.netServices.contains(service)
-        }).first else {
-            return nil
-        }
-        
-        return item
+        return items?.first { $0.netServices.contains(service) }
     }
     
     /// lookup for an item from a net service browser
     fileprivate func item(serviceBrowser: NetServiceBrowser) -> DiscoveryItem? {
-        guard let item = items?.filter({ (discoveryItem) -> Bool in
-            return discoveryItem.netServiceBrowser == serviceBrowser
-        }).first else {
-            return nil
-        }
-        
-        return item
+        return items?.first { $0.netServiceBrowser == serviceBrowser }
     }
 }
 
@@ -247,22 +243,25 @@ extension Discovery {
 extension Discovery {
     fileprivate func notifyDiscoveryDidDiscover(service: DiscoveryService) {
         DispatchQueue.main.async { [weak self] () -> Void in
-            self?.delegate?.discoveryDidDiscover(service: service)
-            self?.discoverHandler?(service)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.discoveryDidDiscover(service: service)
+            strongSelf.discoverHandler?(service)
         }
     }
     
     fileprivate func notifyDiscoveryDidFail(configuration: DiscoveryConfiguration, error: DiscoveryError) {
         DispatchQueue.main.async { [weak self] () -> Void in
-            self?.delegate?.discoveryDidFail(configuration: configuration, error: error)
-            self?.failHandler?(configuration, error)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.discoveryDidFail(configuration: configuration, error: error)
+            strongSelf.failHandler?(configuration, error)
         }
     }
     
     fileprivate func notifyDiscoveryServiceDidDisappear(service: DiscoveryService) {
         DispatchQueue.main.async { [weak self] () -> Void in
-            self?.delegate?.discoveryDidDisappear(service: service)
-            self?.serviceRemovedHandler?(service)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.discoveryDidDisappear(service: service)
+            strongSelf.serviceRemovedHandler?(service)
         }
     }
 }
@@ -271,9 +270,7 @@ extension Discovery {
 extension Discovery: NetServiceBrowserDelegate {
     
     public func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
-        guard let item = item(serviceBrowser: browser) else {
-            return
-        }
+        guard let item = item(serviceBrowser: browser) else { return }
         
         if item.isValidForService(netService: service) {
             item.netServices.insert(service)
@@ -282,18 +279,14 @@ extension Discovery: NetServiceBrowserDelegate {
         }
     }
     
-    public func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
-        guard let item = item(serviceBrowser: browser) else {
-            return
-        }
+    public func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String: NSNumber]) {
+        guard let item = item(serviceBrowser: browser) else { return }
 
         notifyDiscoveryDidFail(configuration: item.configuration, error: .browsingFailure)
     }
     
     public func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-        guard let item = item(service: service) else {
-            return
-        }
+        guard let item = item(service: service) else { return }
 
         item.netServices.remove(service)
         
@@ -305,17 +298,13 @@ extension Discovery: NetServiceBrowserDelegate {
 extension Discovery: NetServiceDelegate {
     
     public func netServiceDidResolveAddress(_ sender: NetService) {
-        guard let item = item(service: sender) else {
-            return
-        }
+        guard let item = item(service: sender) else { return }
         
         notifyDiscoveryDidDiscover(service: DiscoveryService(configuration: item.configuration, netService: sender))
     }
     
-    public func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
-        guard let item = item(service: sender) else {
-            return
-        }
+    public func netService(_ sender: NetService, didNotResolve errorDict: [String: NSNumber]) {
+        guard let item = item(service: sender) else { return }
         
         notifyDiscoveryDidFail(configuration: item.configuration, error: .resolvingFailure)
     }
