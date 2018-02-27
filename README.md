@@ -24,14 +24,14 @@ This framework currenlty provides functionality to discover services on the loca
 ```ruby
 use_frameworks!
 
-pod 'GCXMulticastDNSKit', :git => 'https://github.com/grandcentrix/GCXMulticastDNSKit.git', :tag => 'v1.2.0'
+pod 'GCXMulticastDNSKit', :git => 'https://github.com/grandcentrix/GCXMulticastDNSKit.git', :tag => 'v1.2.1'
 
 ```
 
 ### Carthage
 
 ```ruby
-git "https://github.com/grandcentrix/GCXMulticastDNSKit.git" ~> 1.2.0
+git "https://github.com/grandcentrix/GCXMulticastDNSKit.git" ~> 1.2.1
 
 ```
 
