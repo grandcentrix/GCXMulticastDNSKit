@@ -177,6 +177,13 @@ public class Discovery: NSObject {
         self.serviceRemovedHandler = serviceRemovedHandler
         self.serviceResolveTimeout = serviceResolveTimeout
     }
+
+    // workaround for http://www.openradar.me/28943305, see https://github.com/grandcentrix/GCXMulticastDNSKit/issues/11
+    deinit {
+        let _ = items?.map {
+            $0.netServiceBrowser.delegate = nil
+        }
+    }
     
     /// starts the discovery process
     public func startDiscovery() {
