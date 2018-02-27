@@ -153,7 +153,7 @@ public class Discovery: NSObject {
     public init?(with configurations: [DiscoveryConfiguration],
                  delegate: DiscoveryDelegate,
                  serviceResolveTimeout: TimeInterval = 10) {
-        guard configurations.count > 0 else {
+        if configurations.isEmpty {
             return nil
         }
         
@@ -162,12 +162,20 @@ public class Discovery: NSObject {
         self.serviceResolveTimeout = serviceResolveTimeout
     }
     
+    /// optional initializer. creates a new discovery utilizing callbacks
+    ///
+    /// - Parameters:
+    ///   - configurations: an array of GCXDiscoveryConfiguration instance. Must contain at least one config or the init will fail
+    ///   - discoverHandler: callback for discovery success
+    ///   - failHandler: callback for discovery fail
+    ///   - serviceRemovedHandler: callback for service removal
+    ///   - serviceResolveTimeout: callback for occurred timeouts
     public init?(with configurations: [DiscoveryConfiguration],
                  discoverHandler: DiscoveryDiscoverHandler?,
                  failHandler: DiscoveryFailHandler?,
                  serviceRemovedHandler: DiscoveryServiceRemovedHandler?,
                  serviceResolveTimeout: TimeInterval = 10) {
-        guard configurations.count > 0 else {
+        if configurations.isEmpty {
             return nil
         }
         
