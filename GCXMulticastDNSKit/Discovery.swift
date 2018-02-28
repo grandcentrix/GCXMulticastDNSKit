@@ -69,7 +69,7 @@ public class DiscoveryService: NSObject {
     
     public init(configuration: DiscoveryConfiguration, netService: NetService) {
         self.configuration = configuration
-        self.netService  = netService
+        self.netService = netService
         super.init()
     }
 }
@@ -125,25 +125,25 @@ public class Discovery: NSObject {
     
     /// the default search domain, empty string means .local. 
     /// Should be sufficient for 99% of the use cases
-    fileprivate let defaultMDNSDomain = ""
+    private let defaultMDNSDomain = ""
     
     /// the timeout for resolving a service
-    fileprivate var serviceResolveTimeout: TimeInterval
+    private var serviceResolveTimeout: TimeInterval
     
     /// the configurations used for the search
-    fileprivate var configurations: [DiscoveryConfiguration]
+    private var configurations: [DiscoveryConfiguration]
     
     /// the local models to manage the search
-    fileprivate var items: [DiscoveryItem]?
+    private var items: [DiscoveryItem]?
     
     /// the delegate
     public weak var delegate: DiscoveryDelegate?
     
     
     /// the completion closures
-    fileprivate var discoverHandler: DiscoveryDiscoverHandler?
-    fileprivate var failHandler: DiscoveryFailHandler?
-    fileprivate var serviceRemovedHandler: DiscoveryServiceRemovedHandler?
+    private var discoverHandler: DiscoveryDiscoverHandler?
+    private var failHandler: DiscoveryFailHandler?
+    private var serviceRemovedHandler: DiscoveryServiceRemovedHandler?
     
     /// the designated initializer. creates a new discovery for the specified configurations
     ///
@@ -186,11 +186,9 @@ public class Discovery: NSObject {
         self.serviceResolveTimeout = serviceResolveTimeout
     }
 
-    // workaround for http://www.openradar.me/28943305, see https://github.com/grandcentrix/GCXMulticastDNSKit/issues/11
+    // sanity workaround for http://www.openradar.me/28943305, also see https://github.com/grandcentrix/GCXMulticastDNSKit/issues/11
     deinit {
-        _ = items?.map {
-            $0.netServiceBrowser.delegate = nil
-        }
+        stopSearchingAndResolving()
     }
     
     /// starts the discovery process
@@ -209,39 +207,44 @@ public class Discovery: NSObject {
 extension Discovery {
     
     /// creates the models from the configurations and starts the search for the services
-    fileprivate func initializeItems() {
+    private func initializeItems() {
         items = configurations.map {
-            let item = DiscoveryItem( with: $0)
+            let item = DiscoveryItem(with: $0)
             item.netServiceBrowser.delegate = self
             item.netServiceBrowser.searchForServices(ofType: item.configuration.serviceType, inDomain: defaultMDNSDomain)
             return item
         }
     }
     
-    /// stops all search and resolve operations
-    fileprivate func stopSearchingAndResolving() {
+    /// stops all search and resolve operations, nil out delegates to circumvent http://www.openradar.me/28943305
+    private func stopSearchingAndResolving() {
         _ = items?.map {
             $0.netServiceBrowser.stop()
-            _ = $0.netServices.map { $0.stop() }
+            $0.netServiceBrowser.delegate = nil
+            _ = $0.netServices.map {
+                $0.stop()
+                $0.delegate = nil
+            }
         }
         
         items = nil
     }
     
     /// lookup for an item from a net service
-    fileprivate func item(service: NetService) -> DiscoveryItem? {
+    private func item(service: NetService) -> DiscoveryItem? {
         return items?.first { $0.netServices.contains(service) }
     }
     
     /// lookup for an item from a net service browser
-    fileprivate func item(serviceBrowser: NetServiceBrowser) -> DiscoveryItem? {
+    private func item(serviceBrowser: NetServiceBrowser) -> DiscoveryItem? {
         return items?.first { $0.netServiceBrowser == serviceBrowser }
     }
 }
 
 // MARK: - Delegate notifiction helpers
 extension Discovery {
-    fileprivate func notifyDiscoveryDidDiscover(service: DiscoveryService) {
+    
+    private func notifyDiscoveryDidDiscover(service: DiscoveryService) {
         DispatchQueue.main.async { [weak self] () -> Void in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.discoveryDidDiscover(service: service)
@@ -249,7 +252,7 @@ extension Discovery {
         }
     }
     
-    fileprivate func notifyDiscoveryDidFail(configuration: DiscoveryConfiguration, error: DiscoveryError) {
+    private func notifyDiscoveryDidFail(configuration: DiscoveryConfiguration, error: DiscoveryError) {
         DispatchQueue.main.async { [weak self] () -> Void in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.discoveryDidFail(configuration: configuration, error: error)
@@ -257,7 +260,7 @@ extension Discovery {
         }
     }
     
-    fileprivate func notifyDiscoveryServiceDidDisappear(service: DiscoveryService) {
+    private func notifyDiscoveryServiceDidDisappear(service: DiscoveryService) {
         DispatchQueue.main.async { [weak self] () -> Void in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.discoveryDidDisappear(service: service)
