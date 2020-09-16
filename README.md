@@ -35,6 +35,12 @@ git "https://github.com/grandcentrix/GCXMulticastDNSKit.git" ~> 1.3.1
 
 ```
 
+### Swift Package Manager
+
+[Swift Package Manager](https://swift.org/package-manager/) is a dependency manager built into Xcode. GCXMulticastDNSKit supports SPM from version 5.2.0.
+
+If you are using Xcode 11 or higher, go to `File` -> `Swift Packages` -> `Add Package Dependency` and enter the [package repository URL](https://github.com/grandcentrix/GCXMulticastDNSKit.git), then follow the instructions.
+
 ## Usage
 
 To use this framework we assume that you know the service type of the services (for example `_ptp._tcp` is valid service type for PTP/IP services, another example would be `_http._tcp`). Because there can be more than one service that provides functionality you can also specify an optional prefix for service name that must match. For the example below we are looking for PTP compatible cameras from Vendor A. Those announce themselves with a PTP service type and a services name of `Vendor A (#serialnr)`. We want to find all VendorA cameras on the local network so we use `_ptp._tcp` as service type and `Vendor A` as service name prefix:
