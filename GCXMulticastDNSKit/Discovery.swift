@@ -90,7 +90,7 @@ public enum DiscoveryError: Int, Error {
 
 
 /// the protocol used for the delegate
-public protocol DiscoveryDelegate: class {
+public protocol DiscoveryDelegate: AnyObject {
     
     /// called when a service has been discovered and resolved. Can be called multiple times for a
     /// search when more than one matching service is found. Is only called while in search mode.
