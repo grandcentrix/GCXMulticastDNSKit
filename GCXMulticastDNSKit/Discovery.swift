@@ -216,12 +216,13 @@ extension Discovery {
         }
     }
     
-    /// stops all search and resolve operations, nil out delegates to circumvent http://www.openradar.me/28943305
+    /// stops all search and resolve operations
     private func stopSearchingAndResolving() {
-        _ = items?.map {
+        items?.forEach {
             $0.netServiceBrowser.stop()
+            // set delegate to nil to circumvent http://www.openradar.me/28943305
             $0.netServiceBrowser.delegate = nil
-            _ = $0.netServices.map {
+            $0.netServices.forEach {
                 $0.stop()
                 $0.delegate = nil
             }
@@ -285,6 +286,28 @@ extension Discovery: NetServiceBrowserDelegate {
     public func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String: NSNumber]) {
         guard let item = item(serviceBrowser: browser) else { return }
 
+        if let errorCode = errorDict[NetService.errorCode] as? Int {
+            if let netServiceError = NetService.ErrorCode(rawValue: errorCode) {
+                switch netServiceError {
+                // when unknown error is received, browsing has stopped and must be restarted.
+                // this happens when the app suspends/resumes
+                case .unknownError:
+                    // notify the caller that all existing discovered services have dissapeared
+                    for service in item.netServices {
+                        notifyDiscoveryServiceDidDisappear(service: DiscoveryService(configuration: item.configuration, netService: service))
+                    }
+                    // immediately restart discovery
+                    self.startDiscovery()
+
+                    // don't send .browsingFailure
+                    return
+                default:
+                    break
+                }
+            }
+        }
+
+        // other failures should be returned because it could be a configuration error
         notifyDiscoveryDidFail(configuration: item.configuration, error: .browsingFailure)
     }
     
