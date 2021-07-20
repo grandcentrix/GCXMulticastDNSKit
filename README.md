@@ -1,5 +1,5 @@
 # GCXMulticastDNSKit
- [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Release](https://img.shields.io/github/release/grandcentrix/GCXMulticastDNSKit.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/GCXMulticastDNSKit.svg)](https://cocoapods.org/) 	
+ [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Release](https://img.shields.io/github/release/grandcentrix/GCXMulticastDNSKit.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/GCXMulticastDNSKit.svg)](https://cocoapods.org/)
 
 
 Multicast DNS framework for iOS
@@ -24,14 +24,14 @@ This framework currenlty provides functionality to discover services on the loca
 ```ruby
 use_frameworks!
 
-pod 'GCXMulticastDNSKit', :git => 'https://github.com/grandcentrix/GCXMulticastDNSKit.git', :tag => 'v1.3.1'
+pod 'GCXMulticastDNSKit', :git => 'https://github.com/grandcentrix/GCXMulticastDNSKit.git', :tag => 'v1.4.0'
 
 ```
 
 ### Carthage
 
 ```ruby
-git "https://github.com/grandcentrix/GCXMulticastDNSKit.git" ~> 1.3.1
+git "https://github.com/grandcentrix/GCXMulticastDNSKit.git" ~> 1.4.0
 
 ```
 
